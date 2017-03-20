@@ -1,4 +1,4 @@
-#include "beponique.h"
+#include "beponic.h"
 #include "keymap_bepo.h"
 #include "keymap_french.h"
 

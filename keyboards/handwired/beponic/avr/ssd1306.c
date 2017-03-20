@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "print.h"
-#include "beponique.h"
+#include "beponic.h"
 #include "../common/glcdfont.c"
 #ifdef ADAFRUIT_BLE_ENABLE
 #include "adafruit_ble.h"
