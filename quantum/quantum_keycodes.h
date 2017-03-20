@@ -59,7 +59,7 @@ enum quantum_keycodes {
 
     // Loose keycodes - to be used directly
 
-    RESET = 0x5C00,
+    //RESET = 0x5C00,
     DEBUG,
     MAGIC_SWAP_CONTROL_CAPSLOCK,
     MAGIC_CAPSLOCK_TO_CONTROL,
