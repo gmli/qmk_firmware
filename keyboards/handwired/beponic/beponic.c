@@ -4,6 +4,9 @@
 #include "avr/twimaster.c"
 
 
+gml_fun = 0;
+gml_had_fun = 0;
+
 void matrix_init_kb(void) {
     // put your keyboard start-up code here
     // runs once when the firmware starts up

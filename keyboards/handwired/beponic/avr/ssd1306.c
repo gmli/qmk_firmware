@@ -14,6 +14,7 @@
 #endif
 #include "sendchar.h"
 
+
 // Set this to 1 to help diagnose early startup problems
 // when testing power-on with ble.  Turn it off otherwise,
 // as the latency of printing most of the debug info messes
@@ -29,6 +30,9 @@
 
 #define FontHeight 8
 #define FontWidth 6
+
+// #define FontHeight 12
+// #define FontWidth 10
 
 #define MatrixRows (DisplayHeight / FontHeight)
 #define MatrixCols (DisplayWidth / FontWidth)
@@ -159,6 +163,45 @@ static void clear_display(void) {
   }
   for (uint8_t row = 0; row < MatrixRows; ++row) {
     for (uint8_t col = 0; col < DisplayWidth; ++col) {
+      i2c_write(0);
+    }
+  }
+
+  display.dirty = false;
+
+done:
+  i2c_stop();
+}
+
+static void gml_fill_display(void) {
+  matrix_clear(&display);
+
+  // Clear all of the display bits (there can be random noise
+  // in the RAM on startup)
+  send_cmd3(PageAddr, 0, (DisplayHeight / 8) - 1);
+  send_cmd3(ColumnAddr, 0, DisplayWidth - 1);
+
+  if (i2c_start_write(i2cAddress)) {
+    goto done;
+  }
+  if (i2c_write(0x40)) {
+    // Data mode
+    goto done;
+  }
+  
+
+
+
+  for (uint8_t row = 0; row < MatrixRows; ++row) {
+    for (uint8_t col = 0; col < MatrixCols; ++col) {
+      const uint8_t *glyph = font + (2 * (FontWidth - 1));
+
+      for (uint8_t glyphCol = 0; glyphCol < FontWidth - 1; ++glyphCol) {
+        uint8_t colBits = pgm_read_byte(glyph + glyphCol);
+        i2c_write(colBits);
+      }
+
+      // 1 column of space between chars (it's not included in the glyph)
       i2c_write(0);
     }
   }
@@ -428,15 +471,24 @@ static void render_status_info(void) {
 //   matrix_write_P(&matrix, PSTR("\n"));
 
   char buf[40];
-  snprintf(buf, sizeof(buf), "\nLayer: 0x%04lx  %s",
+  snprintf(buf, sizeof(buf), "\nLayer: 0x%04lx %s %d",
            layer_state,
-           (host_keyboard_leds() & USB_LED_CAPS_LOCK) ? "CAPS" : "");
+           (host_keyboard_leds() & USB_LED_CAPS_LOCK) ? "CAPS" : "", gml_fun);
   matrix_write(&matrix, buf);
   matrix_update(&display, &matrix);
 }
 
 void iota_gfx_task(void) {
-  render_status_info();
+  if (gml_fun == 1) {
+    gml_fill_display();
+    gml_had_fun = 1;
+  } else {
+    if (gml_had_fun == 1) {
+      clear_display();
+      gml_had_fun = 0;
+    }
+    render_status_info();
+  }
 
   if (display.dirty) {
     iota_gfx_flush();

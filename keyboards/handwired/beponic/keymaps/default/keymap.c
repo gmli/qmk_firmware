@@ -65,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   { KC_TAB, BP_B,   BP_E_ACUTE, BP_P,   BP_O,   BP_E_GRAVE, KC_BSPC,  BP_DCRC,  BP_V,   BP_D,   BP_L,   BP_J,   BP_Z, BP_W , KC_RCTRL},
   { KC_LSHIFT, BP_A,   BP_U,   BP_I,   BP_E,   BP_COMMA, KC_ENTER, BP_C,   BP_T,   BP_S,   BP_R,   BP_N,   BP_M, KC_RSHIFT , KC_PGUP},
   { BP_ECRC, BP_A_GRAVE, BP_Y,   BP_X,   BP_DOT,   BP_K, KC_NO,  BP_APOS,  BP_Q,   BP_G,   BP_H,   BP_F,   BP_CCED, KC_UP, KC_PGDN},
-  { KC_NO, KC_NO, KC_LALT, M(1), KC_NO, KC_LCTL, MO(_FN), KC_NO, KC_SPC, KC_RALT, KC_HOME, KC_END, KC_LEFT, KC_DOWN, KC_RIGHT},
+  { M(2), KC_NO, KC_LALT, M(1), KC_NO, KC_LCTL, MO(_FN), KC_NO, KC_SPC, KC_RALT, KC_HOME, KC_END, KC_LEFT, KC_DOWN, KC_RIGHT},
   
  },
 
@@ -117,6 +117,13 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             else {
                 layer_off(_FN);
                 unregister_code(KC_LALT);
+            }
+          case 2:
+            // gml_fill_display();
+            if (record->event.pressed) {
+              gml_fun = 1;
+            } else {
+              gml_fun = 0;
             }
         break;
       }
