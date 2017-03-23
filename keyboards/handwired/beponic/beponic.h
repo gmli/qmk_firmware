@@ -5,6 +5,8 @@
 #include <stddef.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "audio.h"
+
 
 
 extern bool iota_gfx_init(void);
@@ -27,6 +29,8 @@ extern void iota_gfx_task(void);
     { K30, K31, K32,   K33, K34,   K35,   K36, K37,   K38,   K39,   K3A, KC_NO, K3C,   K3D,   K3E }, \
     { K40, K41, KC_NO, K43, KC_NO, KC_NO, K46, KC_NO, KC_NO, KC_NO, K4A, K4B,   K4C,   K4D,   K4E }  \
 }
+
+
 
 // #define KEYMAP( \
 //   k00, k01, k02, k03, k04,           k05, k06, k07, k08, k09, \

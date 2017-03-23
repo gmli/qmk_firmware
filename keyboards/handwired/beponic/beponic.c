@@ -4,6 +4,7 @@
 #include "avr/twimaster.c"
 
 
+
 void matrix_init_kb(void) {
     // put your keyboard start-up code here
     // runs once when the firmware starts up
@@ -26,6 +27,9 @@ void matrix_init_user(void) {
          iota_gfx_init();   // turns on the display
       #ifdef AUDIO_ENABLE
           startup_user();
+          enable_polyphony();
+          set_polyphony_rate(3);
+
       #endif
   }
   void matrix_scan_user(void) {
