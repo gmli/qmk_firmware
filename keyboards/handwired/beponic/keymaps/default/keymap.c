@@ -64,17 +64,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   { KC_TAB, BP_B,   BP_E_ACUTE, BP_P,   BP_O,   BP_E_GRAVE, KC_BSPC,  BP_DCRC,  BP_V,   BP_D,   BP_L,   BP_J,   BP_Z, BP_W , KC_RCTRL},
   { KC_LSHIFT, BP_A,   BP_U,   BP_I,   BP_E,   BP_COMMA, KC_ENTER, BP_C,   BP_T,   BP_S,   BP_R,   BP_N,   BP_M, KC_RSHIFT , KC_PGUP},
   { BP_ECRC, BP_A_GRAVE, BP_Y,   BP_X,   BP_DOT,   BP_K, KC_NO,  BP_APOS,  BP_Q,   BP_G,   BP_H,   BP_F,   BP_CCED, KC_UP, KC_PGDN},
-  { M(2), KC_NO, KC_LALT, M(1), KC_NO, KC_LCTL, MO(_FN), KC_NO, KC_SPC, KC_RALT, KC_HOME, KC_END, KC_LEFT, KC_DOWN, KC_RIGHT},
+  { KC_NO, KC_NO, KC_LALT, M(1), KC_NO, KC_LCTL, MO(_FN), KC_NO, KC_SPC, KC_RALT, KC_HOME, KC_END, KC_LEFT, KC_DOWN, KC_RIGHT},
   
  },
 
 
 [_FN] = { /* FN */
-  { KC_NO, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, KC_DEL,         KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, KC_ESC },
+  { M(20), KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, KC_DEL,         KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, KC_ESC },
   { KC_TAB, KC_NO, KC_HOME,KC_UP, KC_END, KC_PGUP,KC_NO,                    KC_NO, BP_7,BP_8, BP_9, KC_NO,KC_NO, KC_NO, KC_NO  },
   { KC_LSHIFT, KC_NO, KC_LEFT,KC_DOWN, KC_RIGHT, KC_PGDN,KC_NO,             KC_NO, BP_4,BP_5, BP_6, KC_NO,KC_NO, KC_CAPSLOCK, KC_NO  },
   { M(9), MUV_IN, KC_NO,LCTL(BP_X), LCTL(BP_C), LCTL(BP_V),KC_NO,              BP_0 , BP_1,BP_2, BP_3, KC_NO,KC_NO, KC_NO, KC_NO  },
-  { MU_ON, MU_OFF, M(2),KC_TRNS, KC_NO, KC_NO,KC_TRNS,                  KC_NO, RALT(KC_SPC),KC_NO, KC_NO, KC_NO,KC_HOME, KC_NO, KC_END  },
+  { MU_ON, MU_OFF, KC_NO,KC_TRNS, KC_NO, KC_NO,KC_TRNS,                  KC_NO, RALT(KC_SPC),KC_NO, KC_NO, KC_NO,KC_HOME, KC_NO, KC_END  },
  },
 
 
@@ -119,27 +119,32 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
           } else {
             unregister_code(KC_RSFT);
           }
-          case 1:
-            if (record->event.pressed) {
-                layer_on(_FN);
-                register_code(KC_LALT);
-            }
-            else {
-                layer_off(_FN);
-                unregister_code(KC_LALT);
-            }
-          case 2:
+          break;
+        case 1:
+          if (record->event.pressed) {
+              layer_on(_FN);
+              register_code(KC_LALT);
+          }
+          else {
+              layer_off(_FN);
+              unregister_code(KC_LALT);
+          }
+          break;
+        case 20:
+          if (record->event.pressed) {
             PLAY_NOTE_ARRAY(rock, false, 0);
-          case 9:
-            voice_iterate();
+          }
+          break;
+        case 9:
+          voice_iterate();
 
-            // gml_fill_display();
-            if (record->event.pressed) {
-              gml_fun = 1;
-            } else {
-              gml_fun = 0;
-            }
-        break;
+          // gml_fill_display();
+          if (record->event.pressed) {
+            gml_fun = 1;
+          } else {
+            gml_fun = 0;
+          }
+          break;
       }
     return MACRO_NONE;
 };
