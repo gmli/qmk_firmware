@@ -15,6 +15,8 @@ extern void iota_gfx_task(void);
 int gml_fun;
 int gml_had_fun;
 
+int caps_lock;
+
 
 // This a shortcut to help you visually see your layout.
 // The following is an example using the Planck MIT layout

@@ -28,8 +28,10 @@
 #define DisplayHeight 32
 #define DisplayWidth 128
 
-#define FontHeight 8
-#define FontWidth 6
+#define FontHeight 8//8
+#define FontWidth 6//6
+
+// font = font2;
 
 // #define FontHeight 12
 // #define FontWidth 10
@@ -436,32 +438,32 @@ static void render_status_info(void) {
 
   matrix_clear(&matrix);
 
-  matrix_write_P(&matrix, PSTR("Beponic Keyboard\nGuillaume Ludwig\n"));
-  matrix_write_P(&matrix, PSTR("USB: "));
-#ifdef PROTOCOL_LUFA
-  switch (USB_DeviceState) {
-    case DEVICE_STATE_Unattached:
-      matrix_write_P(&matrix, PSTR("Unattached"));
-      break;
-    case DEVICE_STATE_Suspended:
-      matrix_write_P(&matrix, PSTR("Suspended"));
-      break;
-    case DEVICE_STATE_Configured:
-      matrix_write_P(&matrix, PSTR("Configured"));
-      break;
-    case DEVICE_STATE_Powered:
-      matrix_write_P(&matrix, PSTR("Powered"));
-      break;
-    case DEVICE_STATE_Default:
-      matrix_write_P(&matrix, PSTR("Default"));
-      break;
-    case DEVICE_STATE_Addressed:
-      matrix_write_P(&matrix, PSTR("Addressed"));
-      break;
-    default:
-      matrix_write_P(&matrix, PSTR("Invalid"));
-  }
-#endif
+  // matrix_write_P(&matrix, PSTR("Beponic Keyboard\nGuillaume Ludwig\n"));
+  // matrix_write_P(&matrix, PSTR("USB: "));
+// #ifdef PROTOCOL_LUFA
+//   switch (USB_DeviceState) {
+//     case DEVICE_STATE_Unattached:
+//       matrix_write_P(&matrix, PSTR("Unattached"));
+//       break;
+//     case DEVICE_STATE_Suspended:
+//       matrix_write_P(&matrix, PSTR("Suspended"));
+//       break;
+//     case DEVICE_STATE_Configured:
+//       matrix_write_P(&matrix, PSTR("Configured"));
+//       break;
+//     case DEVICE_STATE_Powered:
+//       matrix_write_P(&matrix, PSTR("Powered"));
+//       break;
+//     case DEVICE_STATE_Default:
+//       matrix_write_P(&matrix, PSTR("Default"));
+//       break;
+//     case DEVICE_STATE_Addressed:
+//       matrix_write_P(&matrix, PSTR("Addressed"));
+//       break;
+//     default:
+//       matrix_write_P(&matrix, PSTR("Invalid"));
+//   }
+// #endif
 
 //   matrix_write_P(&matrix, PSTR("\nBLE: "));
 // #ifdef ADAFRUIT_BLE_ENABLE
@@ -471,9 +473,9 @@ static void render_status_info(void) {
 //   matrix_write_P(&matrix, PSTR("\n"));
 
   char buf[40];
-  snprintf(buf, sizeof(buf), "\nLayer: 0x%04lx %s %d",
+  snprintf(buf, sizeof(buf), "Layer: 0x%04lx \n\n%s",
            layer_state,
-           (host_keyboard_leds() & USB_LED_CAPS_LOCK) ? "CAPS" : "", gml_fun);
+           (caps_lock) ? "CAPS" : "");
   matrix_write(&matrix, buf);
   matrix_update(&display, &matrix);
 }

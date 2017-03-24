@@ -6,7 +6,7 @@
 
 gml_fun = 0;
 gml_had_fun = 0;
-
+caps_lock = 0;
 
 void matrix_init_kb(void) {
     // put your keyboard start-up code here
@@ -35,6 +35,10 @@ void matrix_init_user(void) {
 
       #endif
   }
-  void matrix_scan_user(void) {
+void matrix_scan_user(void) {
       iota_gfx_task();  // this is what updates the display continuously
-  }
+}
+
+void led_set_kb(uint8_t usb_led) {
+  caps_lock = usb_led;
+}
