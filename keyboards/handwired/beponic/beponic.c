@@ -40,5 +40,11 @@ void matrix_scan_user(void) {
 }
 
 void led_set_kb(uint8_t usb_led) {
-  caps_lock = usb_led;
+  // usb_led = 3 if active, but the inactive value are 0 or... 1.
+  if (usb_led > 1) {
+    caps_lock = 1;
+  } else {
+    caps_lock = 0;
+  }
+  // caps_lock = usb_led;
 }
