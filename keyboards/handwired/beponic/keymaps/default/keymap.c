@@ -71,10 +71,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_FN] = { /* FN */
   { M(20), KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, KC_DEL,         KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, KC_ESC },
-  { KC_TAB, KC_NO, KC_HOME,KC_UP, KC_END, KC_PGUP,KC_NO,                    KC_NO, BP_7,BP_8, BP_9, KC_NO,KC_NO, KC_NO, KC_NO  },
+  { KC_TAB, KC_NO, KC_HOME,KC_UP, KC_END, KC_PGUP,KC_NO,                    KC_NO, BP_7,BP_8, BP_9, KC_NO,KC_NO, KC_NO, KC_RCTRL  },
   { KC_LSHIFT, KC_NO, KC_LEFT,KC_DOWN, KC_RIGHT, KC_PGDN,KC_NO,             KC_NO, BP_4,BP_5, BP_6, KC_NO,KC_NO, KC_CAPSLOCK, KC_NO  },
   { M(9), MUV_IN, KC_NO,LCTL(BP_X), LCTL(BP_C), LCTL(BP_V),KC_NO,              BP_0 , BP_1,BP_2, BP_3, KC_NO,KC_NO, KC_NO, KC_NO  },
-  { MU_ON, MU_OFF, KC_NO,KC_TRNS, KC_NO, KC_NO,KC_TRNS,                  KC_NO, RALT(KC_SPC),KC_NO, KC_NO, KC_NO,KC_HOME, KC_NO, KC_END  },
+  { MU_ON, MU_OFF, KC_NO,KC_TRNS, KC_NO, KC_LCTL,KC_TRNS,                  KC_NO, RALT(KC_SPC),KC_NO, KC_NO, KC_NO,KC_HOME, KC_NO, KC_END  },
  },
 
 
