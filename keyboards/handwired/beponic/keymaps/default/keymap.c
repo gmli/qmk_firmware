@@ -18,6 +18,15 @@ bool is_ctrl_pressed = 0;
 bool is_altgr_pressed = 0;
 
 
+// Tap Dance Definitions
+#ifdef TAP_DANCE_ENABLE
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [0]  = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
+  [1]  = ACTION_TAP_DANCE_DOUBLE(BP_DOLLAR, KC_ESC)
+};
+#endif
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
@@ -60,9 +69,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // MO(FNAV), KC_RSHIFT,  KC_ENTER),
 
  [_BEPO] = { /* BEPO */ 
-  { BP_DOLLAR,  BP_DQOT,  BP_LGIL,  BP_RGIL,  BP_LPRN,  BP_RPRN,  KC_DEL, BP_AT, BP_PLUS,  BP_MINUS, BP_SLASH, BP_ASTR,  BP_EQUAL, BP_PERCENT, KC_ESC },
+  { TD(1),  BP_DQOT,  BP_LGIL,  BP_RGIL,  BP_LPRN,  BP_RPRN,  KC_DEL, BP_AT, BP_PLUS,  BP_MINUS, BP_SLASH, BP_ASTR,  BP_EQUAL, BP_PERCENT, KC_ESC },
   { KC_TAB, BP_B,   BP_E_ACUTE, BP_P,   BP_O,   BP_E_GRAVE, KC_BSPC,  BP_DCRC,  BP_V,   BP_D,   BP_L,   BP_J,   BP_Z, BP_W , KC_RCTRL},
-  { KC_LSHIFT, BP_A,   BP_U,   BP_I,   BP_E,   BP_COMMA, KC_ENTER, BP_C,   BP_T,   BP_S,   BP_R,   BP_N,   BP_M, KC_RSHIFT , KC_PGUP},
+  { TD(0), BP_A,   BP_U,   BP_I,   BP_E,   BP_COMMA, KC_ENTER, BP_C,   BP_T,   BP_S,   BP_R,   BP_N,   BP_M, KC_RSHIFT , KC_PGUP},
   { BP_ECRC, BP_A_GRAVE, BP_Y,   BP_X,   BP_DOT,   BP_K, KC_NO,  BP_APOS,  BP_Q,   BP_G,   BP_H,   BP_F,   BP_CCED, KC_UP, KC_PGDN},
   { KC_NO, KC_NO, KC_LALT, M(1), KC_NO, KC_LCTL, MO(_FN), KC_NO, KC_SPC, KC_RALT, KC_HOME, KC_END, KC_LEFT, KC_DOWN, KC_RIGHT},
   
@@ -72,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_FN] = { /* FN */
   { M(20), KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, KC_DEL,         KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, KC_ESC },
   { KC_TAB, KC_NO, KC_HOME,KC_UP, KC_END, KC_PGUP,KC_NO,                    KC_NO, BP_7,BP_8, BP_9, KC_NO,KC_NO, KC_NO, KC_RCTRL  },
-  { KC_LSHIFT, KC_NO, KC_LEFT,KC_DOWN, KC_RIGHT, KC_PGDN,KC_NO,             KC_NO, BP_4,BP_5, BP_6, KC_NO,KC_NO, KC_CAPSLOCK, KC_NO  },
+  { KC_LSHIFT, KC_NO, KC_LEFT,KC_DOWN, KC_RIGHT, KC_PGDN,KC_NO,             KC_NO, BP_4,BP_5, BP_6, KC_NO,KC_NO, KC_RSHIFT, KC_CAPSLOCK  },
   { M(9), MUV_IN, KC_NO,LCTL(BP_X), LCTL(BP_C), LCTL(BP_V),KC_NO,              BP_0 , BP_1,BP_2, BP_3, KC_NO,KC_NO, KC_NO, KC_NO  },
   { MU_ON, MU_OFF, KC_NO,KC_TRNS, KC_NO, KC_LCTL,KC_TRNS,                  KC_NO, RALT(KC_SPC),KC_NO, KC_NO, KC_NO,KC_HOME, KC_NO, KC_END  },
  },
