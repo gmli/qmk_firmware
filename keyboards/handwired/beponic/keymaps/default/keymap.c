@@ -27,6 +27,86 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #endif
 
 
+const uint8_t ascii_to_qwerty_test_keycode_lut[0x80] PROGMEM = {
+    0, 0, 0, 0, 0, 0, 0, 0,
+    KC_BSPC, KC_TAB, KC_ENT, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, KC_ESC, 0, 0, 0, 0,
+    KC_SPC, KC_1, KC_QUOT, KC_3, KC_4, KC_5, KC_7, KC_QUOT,
+    KC_9, KC_0, KC_8, KC_EQL, KC_COMM, KC_MINS, KC_DOT, KC_SLSH,
+    KC_0, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7,
+    KC_8, KC_9, KC_SCLN, KC_SCLN, KC_COMM, KC_EQL, KC_DOT, KC_SLSH,
+    KC_2, KC_A, KC_B, KC_C, KC_D, KC_E, KC_F, KC_G,
+    KC_H, KC_I, KC_J, KC_K, KC_L, KC_M, KC_N, KC_O,
+    KC_P, KC_Q, KC_R, KC_S, KC_T, KC_U, KC_V, KC_W,
+    KC_X, KC_Y, KC_Z, KC_LBRC, KC_BSLS, KC_RBRC, KC_6, KC_MINS,
+    KC_GRV, KC_A, KC_B, KC_C, KC_D, KC_E, KC_F, KC_G,
+    KC_H, KC_I, KC_J, KC_K, KC_L, KC_M, KC_N, KC_O,
+    KC_P, KC_Q, KC_R, KC_S, KC_T, KC_U, KC_V, KC_W,
+    KC_X, KC_Y, KC_Z, KC_LBRC, KC_BSLS, KC_RBRC, KC_GRV, KC_DEL
+};
+
+
+const uint8_t ascii_to_bepo_keycode_lut[0x80] PROGMEM = {
+    0, 0, 0, 0, 0, 0, 0, 0,
+    KC_BSPC, KC_TAB, KC_ENT, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, KC_ESC, 0, 0, 0, 0,
+    KC_SPC, KC_1, KC_QUOT, KC_3, KC_4, KC_5, KC_7, KC_QUOT,
+    KC_9, KC_0, KC_8, KC_EQL, KC_COMM, KC_MINS, KC_DOT, KC_SLSH,
+    KC_0, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7,
+    KC_8, KC_9, KC_SCLN, KC_SCLN, KC_COMM, KC_EQL, KC_DOT, KC_SLSH,
+    KC_2, BP_A, BP_B, BP_C, BP_D, BP_E, BP_F, BP_G,
+    BP_H, BP_I, BP_J, BP_K, BP_L, BP_M, BP_N, BP_O,
+    BP_P, BP_Q, BP_R, BP_S, BP_T, BP_U, BP_V, BP_W,
+    BP_X, BP_Y, BP_Z, KC_LBRC, KC_BSLS, KC_RBRC, KC_6, KC_MINS,
+    KC_GRV, BP_A, BP_B, BP_C, BP_D, BP_E, BP_F, BP_G,
+    BP_H, BP_I, BP_J, BP_K, BP_L, BP_M, BP_N, BP_O,
+    BP_P, BP_Q, BP_R, BP_S, BP_T, BP_U, BP_V, BP_W,
+    BP_X, BP_Y, BP_Z, KC_LBRC, KC_BSLS, KC_RBRC, KC_GRV, KC_DEL
+};
+
+const bool ascii_to_bepo_shift_lut[0x80] PROGMEM = {
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 1, 1, 1, 1, 1, 1, 0,
+    1, 1, 1, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 1, 0, 1, 0, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 0, 0, 0, 1, 1,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 1, 1, 1, 1, 0
+};
+
+
+void send_string_bepo(const char *str) {
+    while (1) {
+        uint8_t keycode;
+        uint8_t ascii_code = pgm_read_byte(str);
+        if (!ascii_code) break;
+        keycode = pgm_read_byte(&ascii_to_bepo_keycode_lut[ascii_code]);
+        if (pgm_read_byte(&ascii_to_bepo_shift_lut[ascii_code])) {
+            register_code(KC_LSFT);
+            register_code(keycode);
+            unregister_code(keycode);
+            unregister_code(KC_LSFT);
+        }
+        else {
+            register_code(keycode);
+            unregister_code(keycode);
+        }
+        ++str;
+    }
+}
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
@@ -81,7 +161,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_FN] = { /* FN */
   { M(20), KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5, KC_DEL,         KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, KC_ESC },
   { KC_TAB, KC_NO, KC_HOME,KC_UP, KC_END, KC_PGUP,KC_NO,                    KC_NO, BP_7,BP_8, BP_9, KC_NO,KC_NO, KC_NO, KC_RCTRL  },
-  { KC_LSHIFT, KC_NO, KC_LEFT,KC_DOWN, KC_RIGHT, KC_PGDN,KC_NO,             KC_NO, BP_4,BP_5, BP_6, KC_NO,KC_NO, KC_RSHIFT, KC_CAPSLOCK  },
+  { KC_LSHIFT, M(3), KC_LEFT,KC_DOWN, KC_RIGHT, KC_PGDN,KC_NO,             KC_NO, BP_4,BP_5, BP_6, KC_NO,KC_NO, KC_RSHIFT, KC_CAPSLOCK  },
   { M(9), MUV_IN, KC_NO,LCTL(BP_X), LCTL(BP_C), LCTL(BP_V),KC_NO,              BP_0 , BP_1,BP_2, BP_3, KC_NO,KC_NO, KC_NO, KC_NO  },
   { MU_ON, MU_OFF, KC_NO,KC_TRNS, KC_NO, KC_LCTL,KC_TRNS,                  KC_NO, RALT(KC_SPC),KC_NO, KC_NO, KC_NO,KC_HOME, KC_NO, KC_END  },
  },
@@ -154,6 +234,14 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             gml_fun = 0;
           }
           break;
+        case 3:
+          // layer_on(_BEPO);
+          if (record->event.pressed) {
+            // send_string_bepo(PSTR("bonjour a tous"));
+            SEND_STRING ("Mathematics is used throughout the world as an essential tool in many fields, including natural science, engineering, medicine, and the social sciences. Applied mathematics, the branch of mathematics concerned with application of mathematical knowledge to other fields, inspires and makes use of new mathematical discoveries and sometimes leads to the development of entirely new mathematical disciplines, such as statistics and game theory. Mathematicians also engage in pure mathematics, or mathematics for its own sake");
+          }          // SEND_STRING ("auie");
+          // layer_on(_FN);
+          break;
       }
     return MACRO_NONE;
 };
@@ -182,3 +270,6 @@ bool process_record_user (uint16_t keycode, keyrecord_t *record) {
   
   return true;
 }
+
+
+
