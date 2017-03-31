@@ -22,7 +22,7 @@ bool is_altgr_pressed = 0;
 #ifdef TAP_DANCE_ENABLE
 qk_tap_dance_action_t tap_dance_actions[] = {
   [0]  = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
-  [1]  = ACTION_TAP_DANCE_DOUBLE(BP_DOLLAR, KC_ESC)
+  //[1]  = ACTION_TAP_DANCE_DOUBLE(BP_DOLLAR, KC_ESC)
 };
 #endif
 
@@ -149,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // MO(FNAV), KC_RSHIFT,  KC_ENTER),
 
  [_BEPO] = { /* BEPO */ 
-  { TD(1),  BP_DQOT,  BP_LGIL,  BP_RGIL,  BP_LPRN,  BP_RPRN,  KC_DEL, BP_AT, BP_PLUS,  BP_MINUS, BP_SLASH, BP_ASTR,  BP_EQUAL, BP_PERCENT, KC_ESC },
+  { BP_DOLLAR,  BP_DQOT,  BP_LGIL,  BP_RGIL,  BP_LPRN,  BP_RPRN,  KC_DEL, BP_AT, BP_PLUS,  BP_MINUS, BP_SLASH, BP_ASTR,  BP_EQUAL, BP_PERCENT, KC_ESC },
   { KC_TAB, BP_B,   BP_E_ACUTE, BP_P,   BP_O,   BP_E_GRAVE, KC_BSPC,  BP_DCRC,  BP_V,   BP_D,   BP_L,   BP_J,   BP_Z, BP_W , KC_RCTRL},
   { TD(0), BP_A,   BP_U,   BP_I,   BP_E,   BP_COMMA, KC_ENTER, BP_C,   BP_T,   BP_S,   BP_R,   BP_N,   BP_M, KC_RSHIFT , KC_PGUP},
   { BP_ECRC, BP_A_GRAVE, BP_Y,   BP_X,   BP_DOT,   BP_K, KC_NO,  BP_APOS,  BP_Q,   BP_G,   BP_H,   BP_F,   BP_CCED, KC_UP, KC_PGDN},
