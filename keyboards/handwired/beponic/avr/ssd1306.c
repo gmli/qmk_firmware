@@ -473,9 +473,9 @@ static void render_status_info(void) {
 //   matrix_write_P(&matrix, PSTR("\n"));
 
   char buf[40];
-  snprintf(buf, sizeof(buf), "Layer: 0x%04lx \n\n%s",
+  snprintf(buf, sizeof(buf), "\n  Layer: 0x%04lx \n\n%s",
            layer_state,
-           (caps_lock) ? "CAPS" : "");
+           (caps_lock) ? "  CAPS" : "");
   matrix_write(&matrix, buf);
   matrix_update(&display, &matrix);
 }
